@@ -5,18 +5,6 @@ library(leaflet)
 library(WorldFlora)
 # WorldFlora::WFO.remember()
 
-checkInstance <- function(lon,lat,date,sp){
-  condition <- TRUE
-  if(date=="1990-04-12"){condition <- F}
-  if(lon==142.5917 & lat==11.3733){condition <- F}
-  if(sp=="scientific name..."){condition <- F}
-  if (condition){
-    return(FALSE)
-  }else{
-    return(TRUE)
-  }
-}
-
 Check.species <- function(sp){
   matches <- WFO.match(spec.data = sp,
             WFO.data = WFO.data,
@@ -31,14 +19,11 @@ Check.species <- function(sp){
 function(input, output) {
   
   shinyjs::disable("submit")
-
+  SubmitReady <- reactiveValues(date = FALSE, loc = FALSE, name = FALSE)
+  
   observeEvent(input$Button, {
-    if (checkInstance(input$lon, input$lat, input$date, input$text)){
-      shinyjs::disable("submit")
-    }else{
-      shinyjs::enable("submit")
-    }
-  })  
+    shinyjs::disable("submit")
+  }) 
   
   observeEvent(input$submit, {
     shinyalert("Thanks!", "Form entry has been submitted", type = "success")
@@ -51,9 +36,11 @@ function(input, output) {
     input$Button
     isolate(
       if(input$lon==142.5917 & input$lat==11.3733){
+        SubmitReady$loc <- F
         paste(" - You need to add a valid location")
       }else{
-        paste(' + <span style="color:green">Location entered:</span> ensure it is correct using the map.', sep="")
+        SubmitReady$loc <- T
+        paste(' + <span style="color:green">Location entered:</span> ensure it is correct using the map', sep="")
       }
     )
   })
@@ -62,9 +49,16 @@ function(input, output) {
     input$Button
     isolate(
       if(input$date=="1990-04-12"){
+        SubmitReady$date <- F
         paste(" - You need to add a valid date")
       }else{
-        paste(' + <span style="color:green">Valid date</span>')
+        if(as.numeric(strsplit(as.character(input$date), "-")[[1]][1])<2020){
+          SubmitReady$date <- F
+          paste(' + <span style="color:red">Invalid date: </span>data collected before 2020 is not valid')
+        }else{
+          SubmitReady$date <- T
+          paste(' + <span style="color:green">Valid date</span>')
+        }
       }
     )
   })
@@ -73,17 +67,28 @@ function(input, output) {
     input$Button
     isolate(
       if(input$text=="scientific name..."){
+        SubmitReady$name <- F
         paste(" - You need to add a valid species name")
       }else{
         m <- Check.species(input$text)
         if(m$Matched){
-          paste(' + Species: <span style="color:green">',input$text,'</span>', sep="")
+          SubmitReady$name <- T
+          paste(' + <span style="color:green">Valid species: </span>',input$text, sep="")
         }else{
+          SubmitReady$name <- F
           paste(' + <span style="color:red">Species not found: </span>',"visit http://www.worldfloraonline.org", sep="")
         }
       }
     )
   })
+  
+  observeEvent(input$Button, {
+    if (SubmitReady$loc & SubmitReady$date & SubmitReady$name){
+      shinyjs::enable("submit")
+    }else{
+      shinyjs::disable("submit")
+    }
+  })  
   
   output$mymap <- renderLeaflet({
     input$Button
