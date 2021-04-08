@@ -1,53 +1,47 @@
-library(ggvis)
-
-# For dropdown menu
-actionLink <- function(inputId, ...) {
-  tags$a(href='javascript:void',
-         id=inputId,
-         class='action-button',
-         ...)
-}
+library(shiny)
+library(leaflet)
+library(shinyjs)
+library(shinyalert)
 
 fluidPage(
-  titlePanel("Movie explorer"),
+  titlePanel("MIREN sumbission form"),
+  br(),
   fluidRow(
-    column(3,
-      wellPanel(
-        h4("Filter"),
-        sliderInput("reviews", "Minimum number of reviews on Rotten Tomatoes",
-          10, 300, 80, step = 10),
-        sliderInput("year", "Year released", 1940, 2014, value = c(1970, 2014)),
-        sliderInput("oscars", "Minimum number of Oscar wins (all categories)",
-          0, 4, 0, step = 1),
-        sliderInput("boxoffice", "Dollars at Box Office (millions)",
-          0, 800, c(0, 800), step = 1),
-        selectInput("genre", "Genre (a movie can have multiple genres)",
-          c("All", "Action", "Adventure", "Animation", "Biography", "Comedy",
-            "Crime", "Documentary", "Drama", "Family", "Fantasy", "History",
-            "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi",
-            "Short", "Sport", "Thriller", "War", "Western")
-        ),
-        textInput("director", "Director name contains (e.g., Miyazaki)"),
-        textInput("cast", "Cast names contains (e.g. Tom Hanks)")
+    shinyjs::useShinyjs(),
+    useShinyalert(),  # Set up shinyalert
+    
+    column(4, wellPanel(
+      dateInput("date", label = "Date", value = "1990-04-12"),
+      fluidRow(
+        column(6,numericInput("lon", "Longitude:", 142.5917, min = 0, max = 180)),
+        column(6,numericInput("lat", "Latitude:", 11.3733, min = 0, max = 90))
       ),
-      wellPanel(
-        selectInput("xvar", "X-axis variable", axis_vars, selected = "Meter"),
-        selectInput("yvar", "Y-axis variable", axis_vars, selected = "Reviews"),
-        tags$small(paste0(
-          "Note: The Tomato Meter is the proportion of positive reviews",
-          " (as judged by the Rotten Tomatoes staff), and the Numeric rating is",
-          " a normalized 1-10 score of those reviews which have star ratings",
-          " (for example, 3 out of 4 stars)."
+      textInput("text", "Species:", "scientific name..."),
+      hr(),
+      fluidRow(
+        column(12, align="right",
+               actionButton("Button" ,"Load", icon("refresh"))
         ))
-      )
-    ),
-    column(9,
-      ggvisOutput("plot1"),
-      wellPanel(
-        span("Number of movies selected:",
-          textOutput("n_movies")
-        )
-      )
+      )),
+    
+    column(7,
+           fluidRow(
+             column(12, align="center",
+                    leafletOutput("mymap", width = "100%", height = 300),
+             )),
+           br(),
+           # checkboxInput("somevalue", "Some value", FALSE),
+           # verbatimTextOutput("checked"),
+           p("Form checks:"),
+           pre(class = "header", style="line-height:2; white-space: normal;",
+              htmlOutput("location"),
+              htmlOutput("value"),
+              htmlOutput("text"),
+           ),
+           fluidRow(br(),
+                    column(12, align="right",
+                           actionButton("submit", "SUBMIT", class = "btn btn-primary")
+                    ))
     )
   )
 )
