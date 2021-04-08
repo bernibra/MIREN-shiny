@@ -3,7 +3,7 @@ library(shinyjs)
 library(shinyalert)
 library(leaflet)
 library(WorldFlora)
-# WorldFlora::WFO.remember()
+WorldFlora::WFO.remember()
 
 Check.species <- function(sp){
   matches <- WFO.match(spec.data = sp,
