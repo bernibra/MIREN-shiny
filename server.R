@@ -57,7 +57,7 @@ function(input, output) {
       }else{
         if(as.numeric(strsplit(as.character(input$date), "-")[[1]][1])<2020){
           SubmitReady$date <- F
-          paste(' + <span style="color:red">Invalid date: </span>data collected before 2020 is not valid')
+          paste(' - <span style="color:red">Invalid date: </span>data collected before 2020 is not valid')
         }else{
           SubmitReady$date <- T
           paste(' + <span style="color:green">Valid date</span>')
@@ -79,7 +79,7 @@ function(input, output) {
           paste(' + <span style="color:green">Valid species: </span>',input$text, sep="")
         }else{
           SubmitReady$name <- F
-          paste(' + <span style="color:red">Species not found: </span>',"visit http://www.worldfloraonline.org", sep="")
+          paste(' - <span style="color:red">Species not found: </span>','check the spelling at <a href="http://www.worldfloraonline.org/" target="_blank">worldfloraonline.org</a>', sep="")
         }
       }
     )
