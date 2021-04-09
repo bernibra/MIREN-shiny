@@ -17,7 +17,7 @@ fluidPage(
       }
       .container
       {
-        width: 90%;
+        width: 80%;
         border-radius: 5px;
         border: 1px;
         background-color: white;
