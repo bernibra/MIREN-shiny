@@ -2,19 +2,20 @@ library(shiny)
 library(shinyjs)
 library(shinyalert)
 library(leaflet)
-library(WorldFlora)
+# library(WorldFlora)
 # 
-# WFO.data <- readRDS("./WFOdata.rds")
+# WFO.sp <- readRDS("./WFOsp.rds")
   
 Check.species <- function(sp){
-  matches <- WFO.match(spec.data = sp,
-            WFO.data = WFO.data,
-            Fuzzy = 0,
-            Fuzzy.force=FALSE,
-            First.dist=FALSE,
-            spec.name.tolower=TRUE
-  )
-  return(matches)
+  # matches <- WFO.match(spec.data = sp,
+  #           WFO.data = WFO.data,
+  #           Fuzzy = 0,
+  #           Fuzzy.force=FALSE,
+  #           First.dist=FALSE,
+  #           spec.name.tolower=TRUE
+  # )
+  name <- gsub("^\\s+|\\s+$", "", gsub('[[:punct:] ]+',' ',tolower(sp)))
+  return(list(name=name, Matched=name %in% WFO.sp))
 }
 
 function(input, output) {
