@@ -22,12 +22,11 @@ fluidPage(
         border: 1px;
         background-color: white;
         margin: 40px;
-        padding: 15px;
         position: relative;
         box-shadow: 2px 2px 2px lightgrey;
-        margin-top: 20px;
+        margin-top: 0px;
         padding: 60px;
-        padding-top: 40px;
+        padding-top: 10px;
       }"))
   ),
   div(class="container",
