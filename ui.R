@@ -40,7 +40,7 @@ fluidPage(
            ),
            fluidRow(br(),
                     column(12, align="right",
-                           actionButton("submit", "SUBMIT", class = "btn btn-primary")
+                           disabled(actionButton("submit", "SUBMIT", class = "btn btn-primary"))
                     ))
     )
   )

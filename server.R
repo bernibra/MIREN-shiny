@@ -21,7 +21,6 @@ Check.species <- function(sp){
 
 function(input, output) {
   
-  shinyjs::disable("submit")
   SubmitReady <- reactiveValues(date = FALSE, loc = FALSE, name = FALSE)
   
   observeEvent(input$Button, {
