@@ -5,6 +5,7 @@ library(leaflet)
 # library(WorldFlora)
 # 
 # WFO.sp <- readRDS("./WFOsp.rds")
+WFO.sp <- readRDS("./WFOsp.rds")
   
 Check.species <- function(sp){
   # matches <- WFO.match(spec.data = sp,
