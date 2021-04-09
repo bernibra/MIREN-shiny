@@ -24,10 +24,11 @@ loadData <- function() {
                   port = options()$mysql$port, user = options()$mysql$user,
                   password = options()$mysql$password)
 
-  
+  data <- dbReadTable(db, table)
   
   # Submit the fetch query and disconnect
   dbDisconnect(db)
+  return(data)
 }
 
 Check.species <- function(sp){
@@ -128,4 +129,7 @@ function(input, output) {
       )
   })
   
+  output$table <- renderTable({
+    loadData()
+  })
 }
