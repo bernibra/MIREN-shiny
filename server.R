@@ -3,8 +3,9 @@ library(shinyjs)
 library(shinyalert)
 library(leaflet)
 library(WorldFlora)
-WorldFlora::WFO.remember()
 
+WFO.data <- readRDS("./WFOdata.rds")
+  
 Check.species <- function(sp){
   matches <- WFO.match(spec.data = sp,
             WFO.data = WFO.data,
