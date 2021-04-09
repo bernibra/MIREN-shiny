@@ -20,11 +20,13 @@ fluidPage(
         border-radius: 5px;
         border: 1px;
         background-color: white;
-        margin: 60px;
+        margin-right: 60px;
+        margin-left: 60px;
         position: relative;
         box-shadow: 2px 2px 2px lightgrey;
         margin-top: 30px;
-        padding: 60px;
+        padding-left: 60px;
+        padding-right: 60px;
         padding-top: 10px;
       }"))
   ),
