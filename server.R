@@ -2,9 +2,33 @@ library(shiny)
 library(shinyjs)
 library(shinyalert)
 library(leaflet)
+library(RMySQL)
 # library(WorldFlora)
 # 
 # WFO.sp <- readRDS("./WFOsp.rds")
+
+saveData <- function(data) {
+  # Connect to the database
+  db <- dbConnect(MySQL(), dbname = databaseName, host = options()$mysql$host, 
+                  port = options()$mysql$port, user = options()$mysql$user, 
+                  password = options()$mysql$password)
+
+  # Submit the update query and disconnect
+  dbWriteTable(db, table, data, append = TRUE, row.names=FALSE)
+  dbDisconnect(db)
+}
+
+loadData <- function() {
+  # Connect to the database
+  db <- dbConnect(MySQL(), dbname = databaseName, host = options()$mysql$host,
+                  port = options()$mysql$port, user = options()$mysql$user,
+                  password = options()$mysql$password)
+
+  
+  
+  # Submit the fetch query and disconnect
+  dbDisconnect(db)
+}
 
 Check.species <- function(sp){
   # matches <- WFO.match(spec.data = sp,
@@ -28,6 +52,7 @@ function(input, output) {
   
   observeEvent(input$submit, {
     shinyalert("Thanks!", "Form entry has been submitted", type = "success")
+    saveData(data.frame(date=input$date, sp=input$text, lat=input$lat, lon=input$lon, stringsAsFactors = FALSE))
     shinyjs::disable("submit")
   })
   
