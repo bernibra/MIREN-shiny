@@ -14,17 +14,16 @@ fluidPage(
       
       body {
         background-color: #f2f2f2;
-        margin: 5%;
       }
       .container
       {
         border-radius: 5px;
         border: 1px;
         background-color: white;
-        margin: 40px;
+        margin: 60px;
         position: relative;
         box-shadow: 2px 2px 2px lightgrey;
-        margin-top: 0px;
+        margin-top: 30px;
         padding: 60px;
         padding-top: 10px;
       }"))
