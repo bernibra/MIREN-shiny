@@ -42,4 +42,4 @@ vignettes/*.pdf
 *.pem
 
 # Blurrnig passwords and stuff
-global.R
+./global.R
