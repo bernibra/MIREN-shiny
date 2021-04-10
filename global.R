@@ -1,10 +1,10 @@
 WFO.sp <- readRDS("./WFOsp.rds")
 
 options(mysql = list(
-  "host" = "miren-database.clypfqxwro3s.us-east-2.rds.amazonaws.com",
+  "host" = "location",
   "port" = 3306,
-  "user" = "admiren",
-  "password" = "otJh6OYECcEqVWBX4wSN"
+  "user" = "user",
+  "password" = "password"
 ))
 
 databaseName <- "dbmiren"
