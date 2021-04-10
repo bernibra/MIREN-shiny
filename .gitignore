@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Key for app in aws
 *.pem
+
+# Blurrnig passwords and stuff
+global.R
