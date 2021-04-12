@@ -47,17 +47,11 @@ function(input, output) {
   
   SubmitReady <- reactiveValues(date = FALSE, loc = FALSE, name = FALSE)
   
-  observeEvent(input$Button, {
-    shinyjs::disable("submit")
-  }) 
-  
   observeEvent(input$submit, {
     shinyalert("Thanks!", "Form entry has been submitted", type = "success")
     saveData(data.frame(date=input$date, sp=input$text, lat=input$lat, lon=input$lon, stringsAsFactors = FALSE))
     shinyjs::disable("submit")
   })
-  
-  # output$checked <- renderText({ input$somevalue })
   
   output$location <- renderText({ 
     input$Button

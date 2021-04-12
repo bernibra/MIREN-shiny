@@ -28,7 +28,6 @@ fluidPage(
         padding-right: 60px;
         padding-top: 10px;
         padding-bottom: 20px;
-
       }"))
   ),
   div(class="container",
@@ -77,5 +76,14 @@ fluidPage(
              )
       )
     ) 
-  )
+  ), br()
+  # , br(), div(class="sourcecode",a(style = "color: gray; font-size: small;",href="https://github.com/bernibra/MIREN-shiny" , target="_blank",'source code'), br())
 )
+
+
+# .sourcecode {
+#   width: 100%;
+#   background-color: #f2f2f2;
+#     position: relative;
+#   text-align: right;
+# }
